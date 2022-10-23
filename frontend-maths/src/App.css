@@ -1,0 +1,18 @@
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+.top-left {
+  position: absolute;
+  top: 25px;
+  left: 25px;
+}
+
+.top-right {
+  position: absolute;
+  top: 25px;
+  right: 25px;
+}
