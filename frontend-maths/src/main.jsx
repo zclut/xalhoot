@@ -14,6 +14,12 @@ const httpLink = new HttpLink({
 
 const wsLink = new GraphQLWsLink(createClient({
   url: 'ws://localhost:4000/graphql',
+  // Add disconnect params
+  connectionParams: () => {
+    return {
+      user: localStorage.getItem('user')
+    }
+  }
 }));
 
 const splitLink = split(

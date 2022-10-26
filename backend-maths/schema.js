@@ -3,9 +3,9 @@ import { PubSub } from 'graphql-subscriptions'
 import { rooms, users } from './data.js'
 import { v4 } from 'uuid'
 
-const pubsub = new PubSub()
+export const pubsub = new PubSub()
 
-const SUBSCRIPTIONS_EVENTS = {
+export const SUBSCRIPTIONS_EVENTS = {
     ROOMS_UPDATED: 'ROOMS_UPDATED',
     ROOM_USER_JOINED: 'ROOM_USER_JOINED',
     ROOM_USER_LEFT: 'ROOM_USER_LEFT'
@@ -71,6 +71,7 @@ export const resolvers = {
 
             // Add user to room
             pubsub.publish(SUBSCRIPTIONS_EVENTS.ROOM_USER_JOINED, { roomUserJoined: rooms[index] })
+            pubsub.publish(SUBSCRIPTIONS_EVENTS.ROOMS_UPDATED, { roomsUpdated: rooms })
             return `${user} joined the room`
         },
         leaveRoom: (_, { id, user }) => {
@@ -88,8 +89,8 @@ export const resolvers = {
             // If room dont have users, delete room
             if (rooms[index]?.users.length === 0) {
                 rooms.splice(index, 1)
-                pubsub.publish(SUBSCRIPTIONS_EVENTS.ROOMS_UPDATED, { roomsUpdated: rooms })
             }
+            pubsub.publish(SUBSCRIPTIONS_EVENTS.ROOMS_UPDATED, { roomsUpdated: rooms })
 
             return `${user} left the room`
         }

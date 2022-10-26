@@ -6,7 +6,9 @@ import { ApolloServerPluginDrainHttpServer } from 'apollo-server-core';
 import { makeExecutableSchema } from '@graphql-tools/schema';
 import { WebSocketServer } from 'ws';
 import { useServer } from 'graphql-ws/lib/use/ws';
-import { typeDefs, resolvers } from './schema.js';
+import { typeDefs, resolvers, pubsub, SUBSCRIPTIONS_EVENTS } from './schema.js';
+import { rooms, users } from './data.js'
+import { deleteUserAndRoom } from './utils/index.js';
 
 const schema = makeExecutableSchema({ typeDefs, resolvers });
 const app = express();
@@ -17,7 +19,16 @@ const wsServer = new WebSocketServer({
   server: httpServer,
   path: '/graphql',
 });
-const serverCleanup = useServer({ schema }, wsServer);
+const serverCleanup = useServer({
+    schema,
+    onDisconnect({ connectionParams }, code, reason) {
+      const { user } = connectionParams
+      deleteUserAndRoom(rooms, user)
+      pubsub.publish(SUBSCRIPTIONS_EVENTS.ROOMS_UPDATED, { roomsUpdated: rooms })      
+    },
+  },
+  wsServer
+);
 
 // Set up ApolloServer.
 const server = new ApolloServer({

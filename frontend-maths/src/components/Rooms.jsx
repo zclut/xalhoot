@@ -20,8 +20,8 @@ const Rooms = ({ user }) => {
         await joinRoom({ variables: { id: id, user: user } })
     }
 
-    if (loading) return 'Loading...';
-    if (error) return `Error! ${error.message}`;
+    if (loading) return 'Loading...'
+    if (error) return `Error! ${error.message}`
 
     return (
         <>
@@ -36,7 +36,7 @@ const Rooms = ({ user }) => {
             <div className="container">
                 <div className="container-rooms">
                     {data.listRooms.length === 0
-                        ? <h1>No hay ninguna sala creada. 😒</h1>
+                        ? <h1 className='text-4xl'>No hay ninguna sala creada. 😒</h1>
                         : data.listRooms.map(({ id, users }) => {
                             return <Link key={id} to={`/room/${id}`} onClick={() => handleJoinRoom(id)} state={{ user: user }} className="w-full md:w-1/2 lg:w-1/3 px-2 py-2">
                                 <div className="widget w-full p-4 rounded-lg hover:bg-gray-300 bg-gray-200 border-l-4 border-gray-600">
@@ -51,7 +51,7 @@ const Rooms = ({ user }) => {
                 </div>
             </div>
         </>
-    );
+    )
 }
 
 export default Rooms;

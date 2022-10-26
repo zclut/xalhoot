@@ -7,6 +7,7 @@ const SelectUser = ({ user, onChange }) => {
 
     const handleClick = () => {
         const user = inputRef.current.value
+        localStorage.setItem('user', user)
         if (!user) return
         onChange(inputRef.current.value)
     }
