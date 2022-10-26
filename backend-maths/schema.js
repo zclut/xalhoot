@@ -98,7 +98,7 @@ export const resolvers = {
         roomsUpdated: {
             subscribe: () => pubsub.asyncIterator(SUBSCRIPTIONS_EVENTS.ROOMS_UPDATED)
         },
-        roomUserJoined: {
+        roomUserJoined: {                                                                                                                                                                                                              
             subscribe: () => pubsub.asyncIterator(SUBSCRIPTIONS_EVENTS.ROOM_USER_JOINED)
         },
         roomUserLeft: {

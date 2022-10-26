@@ -18,7 +18,7 @@ const CreateRoom = ({ user }) => {
 
     return (
         <form onSubmit={handleSubmit}>
-            <input className="top-right" type='submit' value="Create Room" />
+            <input className='btn btn-gray' type='submit' value="Create Room" />
         </form>
     );
 }

@@ -1,6 +1,5 @@
 import { useState } from 'react'
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
-import './App.css'
 
 // Components
 import Rooms from './components/Rooms'
