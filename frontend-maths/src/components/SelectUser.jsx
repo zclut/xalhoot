@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom"
 const SelectUser = ({ user, onChange }) => {
     const navigate = useNavigate()
     const inputRef = useRef(null);
-    
+
     const handleClick = () => {
         const user = inputRef.current.value
         if (!user) return
@@ -16,10 +16,13 @@ const SelectUser = ({ user, onChange }) => {
     }, [user])
 
     return (
-        <>
-            <input ref={inputRef} type="text" />
-            <button onClick={handleClick}>Set User</button>
-        </>
+        <div className="flex h-screen bg-gray-900">
+            <div className="flex flex-col space-y-2 m-auto">
+                <h1 className="text-center text-white text-2xl mb-2 uppercase">Enter your username</h1>
+                <input className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" ref={inputRef} type="text" placeholder="Juan"/>
+                <button className="btn btn-gray" onClick={handleClick}>Set User</button>
+            </div>
+        </div>
     );
 }
 

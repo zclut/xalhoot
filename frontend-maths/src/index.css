@@ -24,7 +24,7 @@
 }
 
 .btn-gray {
-  @apply bg-gray-200 text-black
+  @apply bg-gray-200 text-gray-900
 }
 
 .btn-gray:hover {
