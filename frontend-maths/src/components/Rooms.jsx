@@ -6,15 +6,13 @@ import { Link } from 'react-router-dom'
 
 // Queries, Mutations and Subscriptions
 import { LIST_ROOMS } from '../graphql/queries'
-import { ROOM_CREATED, ROOM_DELETED } from '../graphql/subscriptions'
+import { ROOMS_UPDATED } from '../graphql/subscriptions'
 import { JOIN_ROOM } from '../graphql/mutations';
 
-import { concatItem, filterItemById } from '../utils';
+import { includedIn } from '../utils';
 
 const Rooms = ({ user }) => {
-    useSubscriptions(ROOM_CREATED, LIST_ROOMS, 'roomCreated', 'listRooms', concatItem)
-    // TODO: Room updated
-    useSubscriptions(ROOM_DELETED, LIST_ROOMS, 'roomDeleted', 'listRooms', filterItemById)
+    useSubscriptions(ROOMS_UPDATED, LIST_ROOMS, 'roomsUpdated', 'listRooms', includedIn)
     const { loading, error, data } = useQuery(LIST_ROOMS);
 
     const [joinRoom] = useMutation(JOIN_ROOM);

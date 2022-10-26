@@ -1,17 +1,11 @@
 import { gql } from '@apollo/client'
 
-export const ROOM_CREATED = gql`
+export const ROOMS_UPDATED = gql`
     subscription Subscription {
-        roomCreated {
+        roomsUpdated {
             id,
             users 
         }
-    }
-`
-
-export const ROOM_DELETED = gql`
-    subscription Subscription {
-        roomDeleted
     }
 `
 

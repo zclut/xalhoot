@@ -1,4 +1,4 @@
-import './config/db.js'
+// import './config/db.js'
 import { ApolloServer } from 'apollo-server-express';
 import { createServer } from 'http';
 import express from 'express';

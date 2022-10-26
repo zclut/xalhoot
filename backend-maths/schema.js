@@ -6,8 +6,7 @@ import { v4 } from 'uuid'
 const pubsub = new PubSub()
 
 const SUBSCRIPTIONS_EVENTS = {
-    ROOM_CREATED: 'ROOM_CREATED',
-    ROOM_DELETED: 'ROOM_DELETED',
+    ROOMS_UPDATED: 'ROOMS_UPDATED',
     ROOM_USER_JOINED: 'ROOM_USER_JOINED',
     ROOM_USER_LEFT: 'ROOM_USER_LEFT'
 }
@@ -30,8 +29,7 @@ export const typeDefs = gql`
     }
 
     type Subscription {
-        roomCreated: Room
-        roomDeleted: ID
+        roomsUpdated: [Room]
         roomUserJoined: Room
         roomUserLeft: Room
     }
@@ -57,7 +55,7 @@ export const resolvers = {
             rooms.push(room)
 
             // Add event to subscription
-            pubsub.publish(SUBSCRIPTIONS_EVENTS.ROOM_CREATED, { roomCreated: room })
+            pubsub.publish(SUBSCRIPTIONS_EVENTS.ROOMS_UPDATED, { roomsUpdated: rooms })
             pubsub.publish(SUBSCRIPTIONS_EVENTS.ROOM_USER_JOINED, { roomUserJoined: room })
             return room
         },
@@ -85,24 +83,20 @@ export const resolvers = {
             const u = rooms[index].users.findIndex(u => u == user)
             rooms[index]?.users.splice(u, 1)
 
-            console.log(rooms[index])
             pubsub.publish(SUBSCRIPTIONS_EVENTS.ROOM_USER_LEFT, { roomUserLeft: rooms[index] })
 
             // If room dont have users, delete room
             if (rooms[index]?.users.length === 0) {
                 rooms.splice(index, 1)
-                pubsub.publish(SUBSCRIPTIONS_EVENTS.ROOM_DELETED, { roomDeleted: id })
+                pubsub.publish(SUBSCRIPTIONS_EVENTS.ROOMS_UPDATED, { roomsUpdated: rooms })
             }
 
             return `${user} left the room`
         }
     },
     Subscription: {
-        roomCreated: {
-            subscribe: () => pubsub.asyncIterator(SUBSCRIPTIONS_EVENTS.ROOM_CREATED)
-        },
-        roomDeleted: {
-            subscribe: () => pubsub.asyncIterator(SUBSCRIPTIONS_EVENTS.ROOM_DELETED)
+        roomsUpdated: {
+            subscribe: () => pubsub.asyncIterator(SUBSCRIPTIONS_EVENTS.ROOMS_UPDATED)
         },
         roomUserJoined: {
             subscribe: () => pubsub.asyncIterator(SUBSCRIPTIONS_EVENTS.ROOM_USER_JOINED)
