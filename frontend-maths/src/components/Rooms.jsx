@@ -1,31 +1,31 @@
 import { useQuery, useMutation } from '@apollo/client'
 import { useSubscriptions } from '../hooks/useSubscriptions';
 import { Link, useNavigate } from 'react-router-dom'
-
-// Queries, Mutations and Subscriptions
 import { LIST_ROOMS } from '../graphql/queries'
 import { ROOMS_UPDATED } from '../graphql/subscriptions'
 import { JOIN_ROOM, CREATE_ROOM } from '../graphql/mutations';
-
 import { includedIn2 } from '../utils';
 import TopBar from './TopBar';
 import ButtonRoom from './ButtonRoom';
 
-const Rooms = ({ user }) => {
+const Rooms = () => {
     const navigate = useNavigate()
+    const user = localStorage.getItem('user')
 
+    // Queries, Mutations and Subscriptions
     useSubscriptions(ROOMS_UPDATED, LIST_ROOMS, 'roomsUpdated', 'listRooms', includedIn2)
     const { loading, error, data } = useQuery(LIST_ROOMS);
-
     const [joinRoom] = useMutation(JOIN_ROOM);
     const [addRoom] = useMutation(CREATE_ROOM);
 
-    const handleJoinRoom = async (id) => {
-        await joinRoom({ variables: { id: id, user: user } })
-    }
+    // Handlers
+    const handleJoinRoom = async (id) => await joinRoom({ variables: { id: id, user: user } })
 
-    if (loading) return 'Loading...'
-    if (error) return `Error! ${error.message}`
+    const handleCreateRoom = async (e) => {
+        e.preventDefault()
+        const { data } = await addRoom({ variables: { user: user } })
+        navigate(`/room/${data.createRoom.id}`)
+    }
 
     return (
         <>
@@ -34,13 +34,8 @@ const Rooms = ({ user }) => {
             >
                 <ButtonRoom
                     value="Create Room"
-                    handleSubmit={async (e) => {
-                        e.preventDefault()
-                        const { data } = await addRoom({ variables: { user: user } })
-                        navigate(`/room/${data.createRoom.id}`, { state: { user: user } })
-                    }}
+                    handleSubmit={handleCreateRoom}
                 />
-
             </TopBar>
 
             <div className="container">

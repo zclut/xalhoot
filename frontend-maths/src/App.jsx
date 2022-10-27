@@ -15,7 +15,6 @@ const ProtectedRoute = ({ user,redirectPath = '/', children, }) => {
 
 
 function App() {
-  
   const [user, setUser] = useState('')
 
   return (
@@ -25,7 +24,7 @@ function App() {
 
         <Route path="rooms" element={
           <ProtectedRoute user={user}>
-            <Rooms user={user}/>
+            <Rooms/>
           </ProtectedRoute>
         }/>
 

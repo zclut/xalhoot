@@ -1,7 +1,6 @@
-import { useParams, useLocation, useNavigate } from 'react-router-dom'
+import { useParams, useNavigate } from 'react-router-dom'
 import { useQuery, useMutation } from '@apollo/client'
 import { useSubscriptions } from '../hooks/useSubscriptions'
-import { useEffect } from 'react'
 
 // Queries, Mutations and Subscriptions
 import { LEAVE_ROOM } from '../graphql/mutations'
@@ -13,28 +12,22 @@ import ButtonRoom from './ButtonRoom'
 
 const Room = () => {
     const navigate = useNavigate()
-    const { state } = useLocation();
-    const { user } = state || {};
+    const user = localStorage.getItem('user')
     const { id } = useParams()
 
+    // Queries, Mutations and Subscriptions
     useSubscriptions(ROOM_USER_JOINED, GET_ROOM, 'roomUserJoined', 'getRoom', includedIn)
     useSubscriptions(ROOM_USER_LEFT, GET_ROOM, 'roomUserLeft', 'getRoom', includedIn)
     useSubscriptions(ROOMS_UPDATED, LIST_ROOMS, 'roomsUpdated', 'listRooms', includedIn2)
+    const { loading, error, data } = useQuery(GET_ROOM, { variables: { id: id } })
+    const [leaveRoom] = useMutation(LEAVE_ROOM);
 
-    const { loading, error, data } = useQuery(GET_ROOM, { variables: { id: id } },
-        { notifyOnNetworkStatusChange: true }
-    );
-
-    const [leaveRoom, { data: dataLeave }] = useMutation(LEAVE_ROOM);
-
+    // Handlers
     const handleSubmit = async (e) => {
         e.preventDefault()
         await leaveRoom({ variables: { id: id, user: user } })
         navigate('/rooms')
     }
-
-    if (loading) return 'Loading...';
-    if (error) return `Error! ${error.message}`;
 
     return (
         <>
