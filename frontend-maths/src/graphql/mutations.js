@@ -5,6 +5,8 @@ export const CREATE_ROOM = gql`
         createRoom(user: $user) {
             id
             users
+            leader
+            isOpen
         }
     }
 `

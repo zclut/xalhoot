@@ -4,7 +4,9 @@ export const LIST_ROOMS = gql`
     query ListRooms {
         listRooms {
             id
-            users 
+            users
+            leader
+            isOpen
         }
     }
 `
@@ -14,6 +16,8 @@ export const GET_ROOM = gql`
         getRoom(id: $id) {
             id
             users
+            leader
+            isOpen
         }
     }
 `

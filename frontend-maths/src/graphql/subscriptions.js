@@ -3,8 +3,10 @@ import { gql } from '@apollo/client'
 export const ROOMS_UPDATED = gql`
     subscription Subscription {
         roomsUpdated {
-            id,
-            users 
+            id
+            users
+            leader
+            isOpen
         }
     }
 `
@@ -14,6 +16,8 @@ export const ROOM_USER_JOINED = gql`
         roomUserJoined {
             id
             users
+            leader
+            isOpen
         }
     }
 `
@@ -23,6 +27,8 @@ export const ROOM_USER_LEFT = gql`
         roomUserLeft {
             id
             users
+            leader
+            isOpen
         }
     }
 `
