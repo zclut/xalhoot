@@ -2,6 +2,9 @@ import { useParams, useNavigate } from 'react-router-dom'
 import { useQuery, useMutation } from '@apollo/client'
 import { useSubscriptions } from '../hooks/useSubscriptions'
 
+// Icons
+import { BiUser, BiCrown, BiExit } from 'react-icons/bi'
+
 // Queries, Mutations and Subscriptions
 import { LEAVE_ROOM } from '../graphql/mutations'
 import { ROOM_USER_JOINED, ROOM_USER_LEFT, ROOMS_UPDATED } from '../graphql/subscriptions'
@@ -39,12 +42,12 @@ const Room = () => {
                 user={user}
             >
                 <ButtonRoom
-                    value="Leave the room"
+                    value={<BiExit/>}
                     handleSubmit={handleSubmit}
                 />
             </TopBar>
 
-            <div className='flex flex-row justify-between p-4 align-middle items-center'>
+            <div className='flex flex-row justify-between p-4 items-center'>
                 {leader === user
                     ? <button className='btn btn-dark-gray'>{(isOpen) ? 'Close' : 'Open'}</button>
                     : <div />
@@ -59,15 +62,22 @@ const Room = () => {
             <div className="container">
                 <div className='container-users'>
                     {users.map((user) =>
-                        <div key={user} className={`w-1/3 lg:w-1/5 md:w-1/4 p-2 bg-gray-900 bg-opacity-25 text-center border-gray-900 ${(leader === user) && 'border-2'}`}>
-                            <span className='text-gray-900 text-xl'>{user}</span>
+                        <div key={user} className="w-1/3 lg:w-1/5 md:w-1/4 p-2">
+                            <div className={`flex flex-row rounded-xl align-middle items-center p-2 overflow-hidden text-ellipsis whitespace-nowrap ${(leader === user) ? 'bg-color-yellow' : 'bg-white'} bg-opacity-90 text-center`}>
+                                <div className='text-2xl text-black'>
+                                    {(leader === user) ? <BiCrown /> : <BiUser />}
+                                </div>
+                                <span className='flex-auto text-gray-900 text-xl'>
+                                    {user}
+                                </span>
+                            </div>
                         </div>
                     )}
                 </div>
             </div>
 
-            <div className='absolute bottom-2 right-2 bg-gray-900'>
-                <span className='p-2 text-gray-200 text-2xl'>Online - {data.getRoom.users.length}</span>
+            <div className='absolute flex flex-row bottom-2 right-2 text-gray-200 text-2xl items-center px-2 rounded-full'>
+                <BiUser /> 1000
             </div>
         </>
     );

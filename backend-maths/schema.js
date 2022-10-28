@@ -105,10 +105,13 @@ export const resolvers = {
 
             pubsub.publish(SUBSCRIPTIONS_EVENTS.ROOM_USER_LEFT, { roomUserLeft: rooms[index] })
 
+            // Change leader if leader leave
+            if (rooms[index].leader == user)
+                rooms[index].leader = rooms[index].users[Math.floor(Math.random() * rooms[index].users.length)]
+
             // If room dont have users, delete room
-            if (rooms[index]?.users.length === 0) {
-                rooms.splice(index, 1)
-            }
+            if (rooms[index]?.users.length === 0) rooms.splice(index, 1)
+            
             pubsub.publish(SUBSCRIPTIONS_EVENTS.ROOMS_UPDATED, { roomsUpdated: rooms })
 
             return `${user} left the room`

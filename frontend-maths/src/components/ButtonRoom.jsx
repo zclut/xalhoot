@@ -1,8 +1,6 @@
 const ButtonRoom = ({ value, handleSubmit }) => {
     return (
-        <form onSubmit={handleSubmit}>
-            <input className="btn btn-gray" type='submit' value={value} />
-        </form>
+        <button className="btn btn-gray" type='submit' onClick={handleSubmit}>{value}</button>
     );
 }
 
