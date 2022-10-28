@@ -22,3 +22,15 @@ export const LEAVE_ROOM = gql`
         leaveRoom(id: $id, user: $user)
     }
 `
+
+export const START_GAME = gql`
+    mutation StartRoom($id: ID!) {
+        startRoom(id: $id)
+    }
+`
+
+export const KICK_USER_ROOM = gql`
+    mutation kickUserRoom($id: ID!, $user: String!) {
+        kickUserRoom(id: $id, user: $user)
+    }
+`

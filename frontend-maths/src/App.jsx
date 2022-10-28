@@ -7,6 +7,7 @@ import * as THREE from "three"
 import Rooms from './components/Rooms'
 import Room from './components/Room'
 import SelectUser from './components/SelectUser'
+import Game from './components/Game'
 
 const ProtectedRoute = ({ user, redirectPath = '/', children, }) => {
   if (!user) {
@@ -60,6 +61,12 @@ function App() {
         <Route path="room/:id" element={
           <ProtectedRoute user={user}>
             <Room />
+          </ProtectedRoute>
+        } />
+
+        <Route path="room/:id/game" element={
+          <ProtectedRoute user={user}>
+            <Game />
           </ProtectedRoute>
         } />
       </Routes>
