@@ -21,6 +21,7 @@ const Room = () => {
     useSubscriptions(ROOMS_UPDATED, LIST_ROOMS, 'roomsUpdated', 'listRooms', includedIn2)
     const { loading, error, data } = useQuery(GET_ROOM, { variables: { id: id } })
     const [leaveRoom] = useMutation(LEAVE_ROOM);
+    const { leader, users, isOpen } = data?.getRoom || {}
 
     // Handlers
     const handleSubmit = async (e) => {
@@ -28,6 +29,9 @@ const Room = () => {
         await leaveRoom({ variables: { id: id, user: user } })
         navigate('/rooms')
     }
+
+    if (loading) return 'Loading...'
+    if (error) return `Error! ${error.message}`
 
     return (
         <>
@@ -38,11 +42,33 @@ const Room = () => {
                     value="Leave the room"
                     handleSubmit={handleSubmit}
                 />
-
             </TopBar>
 
-            <span className="top-right">Online - {data.getRoom.users.length}</span>
-            <h1>{id}</h1>
+            <div className='flex flex-row justify-between p-4 align-middle items-center'>
+                {leader === user
+                    ? <button className='btn btn-dark-gray'>{(isOpen) ? 'Close' : 'Open'}</button>
+                    : <div />
+                }
+                <h1 className='text-4xl text-center'>Room</h1>
+                {leader === user
+                    ? <button className='btn btn-dark-gray'> Start</button>
+                    : <div />
+                }
+            </div>
+
+            <div className="container">
+                <div className='container-users'>
+                    {users.map((user) =>
+                        <div key={user} className={`w-1/3 lg:w-1/5 md:w-1/4 p-2 bg-gray-900 bg-opacity-25 text-center border-gray-900 ${(leader === user) && 'border-2'}`}>
+                            <span className='text-gray-900 text-xl'>{user}</span>
+                        </div>
+                    )}
+                </div>
+            </div>
+
+            <div className='absolute bottom-2 right-2 bg-gray-900'>
+                <span className='p-2 text-gray-200 text-2xl'>Online - {data.getRoom.users.length}</span>
+            </div>
         </>
     );
 }

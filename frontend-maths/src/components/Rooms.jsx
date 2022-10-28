@@ -27,6 +27,9 @@ const Rooms = () => {
         navigate(`/room/${data.createRoom.id}`)
     }
 
+    if (loading) return 'Loading...'
+    if (error) return `Error! ${error.message}`
+
     return (
         <>
             <TopBar
@@ -42,8 +45,8 @@ const Rooms = () => {
                 <div className="container-rooms">
                     {data.listRooms.filter(({ isOpen }) => isOpen).length === 0
                         ? <h1 className='text-4xl'>No hay ninguna sala creada. 😒</h1>
-                        : data.listRooms.map(({ id, users, leader, isOpen }) => {
-                            return (isOpen) && <Link key={id} to={`/room/${id}`} onClick={() => handleJoinRoom(id)} state={{ user: user }} className="w-full md:w-1/2 lg:w-1/3 px-2 py-2">
+                        : data.listRooms.map(({ id, users, leader, isOpen }) =>
+                            (isOpen) && <Link key={id} to={`/room/${id}`} onClick={() => handleJoinRoom(id)} state={{ user: user }} className="w-full md:w-1/2 lg:w-1/3 p-2">
                                 <div className="widget w-full p-4 rounded-lg hover:bg-gray-300 bg-gray-200 border-l-4 border-gray-600">
                                     <div className="flex flex-col justify-center">
                                         <div className="text-lg text-black">{leader}'s room</div>
@@ -51,7 +54,7 @@ const Rooms = () => {
                                     </div>
                                 </div>
                             </Link>
-                        })
+                        )
                     }
                 </div>
             </div>

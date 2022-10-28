@@ -31,10 +31,18 @@
   @apply bg-gray-300
 }
 
+.btn-dark-gray {
+  @apply bg-gray-900 text-gray-200
+}
+
+.btn-dark-gray:hover {
+  @apply bg-gray-800
+}
+
 .container {
   @apply max-w-7xl w-full mx-auto mt-6 px-6
 }
 
-.container-rooms {
+.container-rooms, .container-users {
   @apply flex flex-wrap;
 }
