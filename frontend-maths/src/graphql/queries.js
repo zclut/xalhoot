@@ -18,6 +18,11 @@ export const GET_ROOM = gql`
             users
             leader
             isOpen
+            scores {
+                id
+                user
+                points
+            }
         }
     }
 `

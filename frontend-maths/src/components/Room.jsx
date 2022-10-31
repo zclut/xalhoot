@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { useQuery, useMutation } from '@apollo/client'
 import { useSubscriptions } from '../hooks/useSubscriptions'
@@ -6,14 +7,15 @@ import { useSubscriptions } from '../hooks/useSubscriptions'
 import { BiUser, BiCrown, BiExit } from 'react-icons/bi'
 import { ImCross } from 'react-icons/im'
 
-// Queries, Mutations and Subscriptions
+// Components
+import TopBar from './TopBar'
+import ButtonRoom from './ButtonRoom'
+
+// Queries, Mutations, Subscriptions and Utils
 import { LEAVE_ROOM, START_GAME, KICK_USER_ROOM } from '../graphql/mutations'
 import { ROOM_USER_JOINED, ROOM_USER_LEFT, ROOMS_UPDATED } from '../graphql/subscriptions'
 import { GET_ROOM, LIST_ROOMS } from '../graphql/queries'
 import { includedIn, includedIn2 } from '../utils'
-import TopBar from './TopBar'
-import ButtonRoom from './ButtonRoom'
-import { useEffect } from 'react'
 
 const Room = () => {
     const navigate = useNavigate()

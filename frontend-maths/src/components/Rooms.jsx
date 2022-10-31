@@ -1,12 +1,16 @@
+import { useNavigate } from 'react-router-dom'
 import { useQuery, useMutation } from '@apollo/client'
+
+// Components
+import ButtonRoom from './ButtonRoom';
+import TopBar from './TopBar';
+
+// Queries, Mutations, Subscriptions and Utils
 import { useSubscriptions } from '../hooks/useSubscriptions';
-import { Link, useNavigate } from 'react-router-dom'
-import { LIST_ROOMS } from '../graphql/queries'
 import { ROOMS_UPDATED } from '../graphql/subscriptions'
 import { JOIN_ROOM, CREATE_ROOM } from '../graphql/mutations';
+import { LIST_ROOMS } from '../graphql/queries'
 import { includedIn2 } from '../utils';
-import TopBar from './TopBar';
-import ButtonRoom from './ButtonRoom';
 
 const Rooms = () => {
     const navigate = useNavigate()

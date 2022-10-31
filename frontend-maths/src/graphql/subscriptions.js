@@ -7,6 +7,11 @@ export const ROOMS_UPDATED = gql`
             users
             leader
             isOpen
+            scores {
+                id
+                user
+                points
+            }
         }
     }
 `
@@ -18,6 +23,11 @@ export const ROOM_USER_JOINED = gql`
             users
             leader
             isOpen
+            scores {
+                id
+                user
+                points
+            }
         }
     }
 `
@@ -29,6 +39,11 @@ export const ROOM_USER_LEFT = gql`
             users
             leader
             isOpen
+            scores {
+                id
+                user
+                points
+            }
         }
     }
 `

@@ -12,11 +12,18 @@ export const SUBSCRIPTIONS_EVENTS = {
 }
 
 export const typeDefs = gql`
+    type Score {
+        id: ID!
+        user: String!
+        points: Int!
+    }
+
     type Room {
         id: ID!
         users: [String]
         isOpen: Boolean
         leader: String
+        scores: [Score]
     }
 
     type Query {
@@ -30,6 +37,7 @@ export const typeDefs = gql`
         leaveRoom(id: ID!, user: String!): String
         startRoom(id: ID!): String
         kickUserRoom(id: ID!, user: String!): String
+        addScoreToRoom(id: ID!, user:String!, points: Int!): String
     }
 
     type Subscription {
@@ -73,7 +81,8 @@ export const resolvers = {
                 id: v4(),
                 users: [user],
                 leader: user,
-                isOpen: true
+                isOpen: true,
+                scores: []
             }
             // Add room to data
             rooms.push(room)
@@ -125,6 +134,23 @@ export const resolvers = {
             pubsub.publish(SUBSCRIPTIONS_EVENTS.ROOMS_UPDATED, { roomsUpdated: rooms })
 
             return `${user} left the room`
+        },
+        addScoreToRoom: (_, {id, user, points}) => {
+            const room = rooms.find(r => r.id === id)
+            if (room) {
+                // check if user exist in the room
+                if (!room.users.includes(user))
+                    throw new Error('user dont exists')
+
+                if (room.scores.find(s => s.user === user))
+                    throw new Error('user already have score')
+                
+                // add score
+                room.scores.push({ id: v4(), user, points })
+                pubsub.publish(SUBSCRIPTIONS_EVENTS.ROOMS_UPDATED, { roomsUpdated: rooms })
+                return 'Your results have been sent'
+            }
+            return 'No room found'
         }
     },
     Subscription: {

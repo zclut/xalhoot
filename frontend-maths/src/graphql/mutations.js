@@ -7,6 +7,11 @@ export const CREATE_ROOM = gql`
             users
             leader
             isOpen
+            scores {
+                id
+                user
+                points
+            }
         }
     }
 `
@@ -32,5 +37,11 @@ export const START_GAME = gql`
 export const KICK_USER_ROOM = gql`
     mutation kickUserRoom($id: ID!, $user: String!) {
         kickUserRoom(id: $id, user: $user)
+    }
+`
+
+export const ADD_SCORE_TO_ROOM = gql`
+    mutation AddScoreToRoom($id: ID!, $user: String!, $points: Int!) {
+        addScoreToRoom(id: $id, user: $user, points: $points)
     }
 `
