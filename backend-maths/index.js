@@ -10,6 +10,8 @@ import { typeDefs, resolvers, pubsub, SUBSCRIPTIONS_EVENTS } from './schema.js';
 import { rooms, users } from './data.js'
 import { deleteUserAndRoom } from './utils/index.js';
 
+const PORT = 4000;
+
 const schema = makeExecutableSchema({ typeDefs, resolvers });
 const app = express();
 
@@ -52,7 +54,6 @@ const server = new ApolloServer({
 await server.start();
 server.applyMiddleware({ app });
 
-const PORT = 4000;
 // Now that our HTTP server is fully set up, we can listen to it.
 httpServer.listen(PORT, () => {
   console.log(`Server is now running on http://localhost:${PORT}${server.graphqlPath}`);
