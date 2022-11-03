@@ -11,6 +11,7 @@ import { ROOMS_UPDATED } from '../graphql/subscriptions'
 import { JOIN_ROOM, CREATE_ROOM } from '../graphql/mutations';
 import { LIST_ROOMS } from '../graphql/queries'
 import { includedIn2 } from '../utils';
+import GameWaiting from './GameWaiting';
 
 const Rooms = () => {
     const navigate = useNavigate()
@@ -49,10 +50,10 @@ const Rooms = () => {
             </TopBar>
 
             <div className="container">
-                <div className="container-rooms">
-                    {data.listRooms.filter(({ isOpen }) => isOpen).length === 0
-                        ? <h1 className='text-4xl'>No hay ninguna sala creada. 😒</h1>
-                        : data.listRooms.map(({ id, users, leader, isOpen }) =>
+                {data.listRooms.filter(({ isOpen }) => isOpen).length === 0
+                    ? <GameWaiting text={"No room has been created"} />
+                    : <div className="container-rooms"> {
+                        data.listRooms.map(({ id, users, leader, isOpen }) =>
                             (isOpen) && <div key={id} to={`/room/${id}`} onClick={() => handleJoinRoom(id)} className="w-full md:w-1/2 lg:w-1/3 p-2 cursor-pointer">
                                 <div className="w-full p-4 rounded-lg hover:bg-gray-200/90 bg-white/90 border-l-[12px] bg-opacity-50 border-yellow-300">
                                     <div className="flex flex-col justify-center">
@@ -61,9 +62,9 @@ const Rooms = () => {
                                     </div>
                                 </div>
                             </div>
-                        )
-                    }
-                </div>
+                        )}
+                    </div>
+                }
             </div>
         </>
     )

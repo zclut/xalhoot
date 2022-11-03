@@ -88,7 +88,7 @@ const Game = () => {
                 />
             </TopBar>
 
-            <div className="container h-[88vh]">
+            <div className="container">
                 <div className='absolute flex flex-row top-16 left-4 text-gray-200 text-2xl items-center px-2 rounded-full'>
                     {!finished
                         ? <>
@@ -101,7 +101,7 @@ const Game = () => {
 
                 {!finished
                     ? (answers.length === question + 1)
-                        ? <GameWaiting />
+                        ? <GameWaiting text={"Waiting for other players answers"} />
                         : <>
                             <div className="w-full p-4 rounded-lg bg-color-yellow mb-3">
                                 <h1 className="text-2xl text-black text-center">{questions[question]?.question}</h1>

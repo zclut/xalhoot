@@ -10,7 +10,7 @@ export const useSubscriptions = (subscription, query, dataSubscription, dataQuer
 
             const store = client.readQuery({ query: query })
             if (store && !includedIn(store[dataQuery], item)) {
-                console.log(store[dataQuery], item);
+                // console.log(store[dataQuery], item);
                 client.writeQuery({
                     query: query,
                     data: { [dataQuery]: fn(store[dataQuery], item) }

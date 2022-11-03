@@ -1,47 +1,42 @@
-import { useState } from "react";
+import { GET_ROOM } from "../graphql/queries";
 import { useEffect } from "react";
+import { useParams } from "react-router-dom";
+import { useQuery } from "@apollo/client";
+import { useState } from "react";
 
 const GameFinished = () => {
+    const { id } = useParams()
+    const { loading, error, data } = useQuery(GET_ROOM, { variables: { id: id } })
 
-    const data = [
-        {
-            id: "90052fe7-0980-4aff-8be6-56c03d8b91ea",
-            user: "Jose",
-            points: 110
-        },
-        {
-            id: "1069fd9b-ae2c-4bb1-a32f-5025275390f9",
-            user: "Juan",
-            points: 0
-        },
-        {
-            id: "90052fe7-0980-4aff-8be6-56c03d8b922a",
-            user: "Ja",
-            points: 70
-        },
-        {
-            id: "90052fe7-0980-4aff-8be6-56c03d8b933",
-            user: "Fa",
-            points: 10
-        },
-    ]
-
-    const [ scores, setScores ] = useState(data)
+    const [scores, setScores] = useState([])
 
     useEffect(() => {
-        // Order data by points
-        const ordered = scores.sort((a, b) => b.points - a.points)
-        setScores(ordered)
-    }, [])
+        const copyScores = [...data.getRoom.scores]
+        setScores(copyScores.sort((a, b) => b.points - a.points))
+    }, [data])
+
+    if (loading) return 'Loading...'
+    if (error) return `Error! ${error.message}`
 
     return (
-        <>
-            {scores.slice(0, 3).map(({ user, points }, index) => (
-                <div key={index}>
-                    <h3 className="text-white text-4xl">{user} - {points}</h3>
-                </div>
-            ))}
-        </>
+        <div className="shadow overflow-hidden rounded-3xl">
+            <table className="min-w-full bg-white">
+                <thead className="bg-color-yellow text-black">
+                    <tr>
+                        <th className="w-1/3 py-3 px-4 uppercase font-bold text-sm">User</th>
+                        <th className="w-1/3 py-3 px-4 uppercase font-bold text-sm">Score</th>
+                    </tr>
+                </thead>
+                <tbody className="text-gray-700">
+                    {scores.slice(0, 3).map(({ user, points }, index) => (
+                        <tr key={index} className={`${index % 2 === 0 ? 'bg-gray-100' : 'bg-gray-200'} text-center`}>
+                            <td className="p-4">{user}</td>
+                            <td className="p-4">{points}</td>
+                        </tr>
+                    ))}
+                </tbody>
+            </table>
+        </div>
     );
 }
 

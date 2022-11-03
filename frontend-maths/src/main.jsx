@@ -9,11 +9,11 @@ import { getMainDefinition } from '@apollo/client/utilities';
 import { createClient } from 'graphql-ws';
 
 const httpLink = new HttpLink({
-  uri: `${process.env.REACT_APP_API_URI}/graphql`
+  uri: `${import.meta.env.VITE_API_URI}/graphql`
 });
 
 const wsLink = new GraphQLWsLink(createClient({
-  url: `${process.env.REACT_APP_WS_URI}/graphql`,
+  url: `${import.meta.env.VITE_WS_URI}/graphql`,
   // Add disconnect params
   connectionParams: () => {
     return {

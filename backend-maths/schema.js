@@ -105,8 +105,6 @@ export const resolvers = {
 
             rooms[index]?.users.push(user)
 
-            console.log(rooms[index]);
-
             // Add user to room
             pubsub.publish(SUBSCRIPTIONS_EVENTS.ROOM_USER_JOINED, { roomUserJoined: rooms[index] })
             pubsub.publish(SUBSCRIPTIONS_EVENTS.ROOMS_UPDATED, { roomsUpdated: rooms })

@@ -42,7 +42,7 @@ const Room = () => {
 
     const handleStartGame = async () => await startGame({ variables: { id: id } })
     const handleKickUser = async (item) => await kickUserRoom({ variables: { id: id, user: item } })
-    
+
     // Execute useEffect when start the game and redirect all users to game
     useEffect(() => {
         if (data && !isOpen) navigate(`/room/${id}/game`)
@@ -65,10 +65,7 @@ const Room = () => {
 
 
             <div className='flex flex-row justify-between p-4 items-center'>
-                {leader === user
-                    ? <button className='btn btn-dark-gray'>{(isOpen) ? 'Close' : 'Open'}</button>
-                    : <div />
-                }
+                <div />
                 <h1 className='text-4xl text-center text-white'>Room</h1>
                 {leader === user
                     ? <button className='btn btn-gray' onClick={handleStartGame}> Start</button>
@@ -79,7 +76,7 @@ const Room = () => {
             <div className="container">
                 <div className='container-users'>
                     {users.map((item) =>
-                        <div key={item} className="w-1/3 lg:w-1/5 md:w-1/4 p-2">
+                        <div key={item} className="w-1/2 lg:w-1/5 md:w-1/4 p-2">
                             <div className={`flex flex-row rounded-xl align-middle items-center p-2 overflow-hidden text-ellipsis whitespace-nowrap ${(leader === item) ? 'bg-color-yellow' : 'bg-white'} bg-opacity-90 text-center`}>
                                 <div className='text-2xl text-black'>
                                     {(leader === item) ? <BiCrown /> : <BiUser />}
@@ -90,10 +87,10 @@ const Room = () => {
                                 {
                                     // Show cross in another item if user is leader
                                     (leader === user && leader !== item)
-                                        ? <button className='btn btn-red' onClick={() => handleKickUser(item)}>
-                                        <ImCross />
-                                    </button>
-                                    : null
+                                        ? <button className='text-xs btn btn-red' onClick={() => handleKickUser(item)}>
+                                            <ImCross />
+                                        </button>
+                                        : null
                                 }
                             </div>
                         </div>
