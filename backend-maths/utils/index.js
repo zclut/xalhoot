@@ -7,3 +7,10 @@ export const deleteUserAndRoom = (rooms, user) => {
     })
     return rooms
 }
+
+export const disconnectUser = (users, user) => {
+    users.forEach((u, index) => {
+        if (u === user) users.splice(index, 1)
+    })
+    return users
+}

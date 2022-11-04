@@ -8,7 +8,7 @@ import { WebSocketServer } from 'ws';
 import { useServer } from 'graphql-ws/lib/use/ws';
 import { typeDefs, resolvers, pubsub, SUBSCRIPTIONS_EVENTS } from './schema.js';
 import { rooms, users } from './data.js'
-import { deleteUserAndRoom } from './utils/index.js';
+import { deleteUserAndRoom, disconnectUser } from './utils/index.js';
 
 const PORT = 4000;
 
@@ -25,7 +25,9 @@ const serverCleanup = useServer({
     schema,
     onDisconnect({ connectionParams }, code, reason) {
       const { user } = connectionParams
+      console.log(user);
       deleteUserAndRoom(rooms, user)
+      disconnectUser(users, user)
       pubsub.publish(SUBSCRIPTIONS_EVENTS.ROOMS_UPDATED, { roomsUpdated: rooms })      
     },
   },

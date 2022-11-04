@@ -45,3 +45,9 @@ export const ADD_SCORE_TO_ROOM = gql`
         addScoreToRoom(id: $id, user: $user, points: $points)
     }
 `
+
+export const CONNECT_USER = gql`
+    mutation Mutation($user: String!) {
+        connectUser(user: $user)
+    }
+`

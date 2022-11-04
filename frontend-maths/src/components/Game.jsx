@@ -19,7 +19,7 @@ import { data } from "../assets/data";
 import GameWaiting from "./GameWaiting";
 import GameFinished from "./GameFinished";
 
-const SECONDS_PER_QUESTION = 5
+const SECONDS_PER_QUESTION = 3
 
 const Game = () => {
     const navigate = useNavigate()

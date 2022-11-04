@@ -29,6 +29,7 @@ export const typeDefs = gql`
     type Query {
         listRooms: [Room]
         getRoom(id: ID!): Room
+        listUsers: [String]
     }
 
     type Mutation {
@@ -38,6 +39,7 @@ export const typeDefs = gql`
         startRoom(id: ID!): String
         kickUserRoom(id: ID!, user: String!): String
         addScoreToRoom(id: ID!, user:String!, points: Int!): String
+        connectUser(user: String!): String
     }
 
     type Subscription {
@@ -54,6 +56,9 @@ export const resolvers = {
         },
         getRoom: (_, { id }) => {
             return rooms.find(r => r.id === id)
+        },
+        listUsers: (_, args) => {
+            return users
         }
     },
     Mutation: {
@@ -149,6 +154,14 @@ export const resolvers = {
                 return 'Your results have been sent'
             }
             return 'No room found'
+        },
+        connectUser: (_, { user }) => {
+            if (users.includes(user))
+                throw new Error('user already exists')
+
+            users.push(user)
+            pubsub.publish(SUBSCRIPTIONS_EVENTS.USERS_UPDATED, { usersUpdated: users })
+            return 'User connected'
         }
     },
     Subscription: {

@@ -15,7 +15,7 @@ import ButtonRoom from './ButtonRoom'
 import { LEAVE_ROOM, START_GAME, KICK_USER_ROOM } from '../graphql/mutations'
 import { ROOM_USER_JOINED, ROOM_USER_LEFT, ROOMS_UPDATED } from '../graphql/subscriptions'
 import { GET_ROOM, LIST_ROOMS } from '../graphql/queries'
-import { includedIn, includedIn2 } from '../utils'
+import { includedIn, includedIn2, limitUserLength } from '../utils'
 
 const Room = () => {
     const navigate = useNavigate()
@@ -82,7 +82,7 @@ const Room = () => {
                                     {(leader === item) ? <BiCrown /> : <BiUser />}
                                 </div>
                                 <span className='flex-auto text-gray-900 text-xl'>
-                                    {item}
+                                    {limitUserLength(item)}
                                 </span>
                                 {
                                     // Show cross in another item if user is leader

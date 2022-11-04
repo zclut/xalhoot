@@ -26,3 +26,9 @@ export const GET_ROOM = gql`
         }
     }
 `
+
+export const LIST_USERS = gql`
+    query Query {
+        listUsers
+    }
+`
