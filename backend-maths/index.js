@@ -37,6 +37,9 @@ const server = new ApolloServer({
   schema,
   csrfPrevention: true,
   cache: 'bounded',
+  cors: {
+    origin: ["*"]
+  },
   plugins: [
     ApolloServerPluginDrainHttpServer({ httpServer }),
     {
