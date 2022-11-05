@@ -49,3 +49,20 @@ Start the server
 ```bash
   npm run dev
 ```
+  
+## Screenshots
+
+### Select user
+![Select user](https://i.imgur.com/FqRKc7w.png)
+
+### List of rooms
+![List of rooms](https://i.imgur.com/aIl0vCR.png)
+
+### Inside room
+![Inside room](https://i.imgur.com/ERFIuqC.png)
+
+### Question and answers
+![Question and answers](https://i.imgur.com/t5KT7c4.png)
+
+### Podium
+![Podium](https://i.imgur.com/Zt4JBAu.png)
