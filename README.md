@@ -7,6 +7,7 @@ This is a small project and is a copy of the kahoot game using React and Apollo 
 ## Authors
 
 - Juan Daniel Padilla - [@zclut](https://www.github.com/zclut)
+- Jose Acosta - [@Acosta-JJ](https://github.com/Acosta-JJ)
 
 
 ## Environment Variables
@@ -49,7 +50,28 @@ Start the server
 ```bash
   npm run dev
 ```
-  
+
+## How to enter data for the questions?
+
+Find the `data.js` file and create a json following this structure
+
+```js
+export const data = [
+    {
+        question: 'Example question?',
+        answers: [
+            { text: 'Example answer 1', correct: true },
+            { text: 'Example answer 2', correct: false },
+            { text: 'Example answer 3', correct: false },
+            { text: 'Example answer 4', correct: false },
+        ],
+    },
+    {
+        ...
+    }
+]
+```
+
 ## Screenshots
 
 ### Select user
