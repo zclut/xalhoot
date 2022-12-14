@@ -2,8 +2,11 @@ import { gql } from 'apollo-server'
 import { PubSub } from 'graphql-subscriptions'
 import { rooms, users } from './data.js'
 import { v4 } from 'uuid'
+import { EventEmitter } from 'events';
 
-export const pubsub = new PubSub()
+const biggerEventEmitter = new EventEmitter();
+biggerEventEmitter.setMaxListeners(60);
+export const pubsub = new PubSub({eventEmitter: biggerEventEmitter})
 
 export const SUBSCRIPTIONS_EVENTS = {
     ROOMS_UPDATED: 'ROOMS_UPDATED',

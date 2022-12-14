@@ -43,10 +43,13 @@ const Rooms = () => {
             <TopBar
                 user={user}
             >
-                <ButtonRoom
-                    value="Create Room"
-                    handleSubmit={handleCreateRoom}
-                />
+                {user === "XALDIGITAL"
+                    ? <ButtonRoom
+                        value="Create Room"
+                        handleSubmit={handleCreateRoom}
+                    />
+                    : null
+                }
             </TopBar>
 
             <div className="container">
